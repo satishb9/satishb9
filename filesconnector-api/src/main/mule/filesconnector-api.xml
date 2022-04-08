@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="47da586b-b4d0-46e3-8634-7db04bf3d529" >
+		<http:listener-connection host="0.0.0.0" port="8085" />
+	</http:listener-config>
+	<file:config name="File_Config" doc:name="File Config" doc:id="10d04f3e-e7f4-48af-8b55-59810271ef98" />
+	<file:config name="File_Config1" doc:name="File Config" doc:id="8097d603-fcf3-4c87-820e-3c769faf8eb8" />
+	<file:config name="File_Config2" doc:name="File Config" doc:id="0237be43-e54f-4db3-b88e-0d3ae04c49a9" >
+		<file:connection workingDir="C:\Users\laksh\OneDrive\Documents\New folder" />
+	</file:config>
+	<file:config name="File_Config3" doc:name="File Config" doc:id="49578cf9-f28b-493d-862d-4c3857b850f9" >
+		<file:connection workingDir="C:\Users\laksh\OneDrive\Documents" />
+	</file:config>
+	<http:listener-config name="HTTP_Listener_config1" doc:name="HTTP Listener config" doc:id="0a8056f8-18b1-410a-a4b4-5fa00a6963e7" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<http:listener-config name="HTTP_Listener_config2" doc:name="HTTP Listener config" doc:id="27dc90e8-bd9e-4329-a7b1-dd1ed77d6270" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="filesconnector-apiFlow1" doc:id="2337e84b-887d-4822-9cc1-0bbafc2a0407" >
+		<http:listener doc:name="Listener" doc:id="6ca8435b-9726-4c64-a23b-9f4ca0677e7f" config-ref="HTTP_Listener_config2" path="/files"/>
+		<file:read doc:name="Read" doc:id="3ea28512-c6e9-4783-abe0-5d3e63c9bdd5" config-ref="File_Config3" path="C:\Users\laksh\OneDrive\Documents\sk.json"/>
+		<ee:transform doc:name="Transform Message" doc:id="103c3501-ef37-4592-a6b7-082f133f92d7" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="e8825f42-9c21-461e-b788-436b9b37372f" message="#[payload]"/>
+		<file:write doc:name="Write" doc:id="5879e207-3823-427f-9a9d-2d7ba08cd171" config-ref="File_Config1" path="C:\Users\laksh\OneDrive\Documents\New folder\write-file/ysk">
+			<file:content ><![CDATA[#["hey iam checking write file"]]]></file:content>
+		</file:write>
+	</flow>
+</mule>
