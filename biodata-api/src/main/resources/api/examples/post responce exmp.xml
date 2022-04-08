@@ -1,0 +1,17 @@
+              <root>
+                <students>
+                 <name>satish</name>
+                 <age>25</age>
+                 <city>tnsp</city>
+                </students>
+                <students>
+                 <name>kumar</name>
+                 <age>26</age>
+                 <city>ctp</city>
+                </students>
+                <students>
+                  <name>nani</name>
+                  <age>27</age>
+                  <city>eluru</city>
+               </students>
+              </root>
